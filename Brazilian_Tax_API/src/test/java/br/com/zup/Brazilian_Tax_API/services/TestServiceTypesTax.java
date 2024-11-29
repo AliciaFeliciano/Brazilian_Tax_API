@@ -3,6 +3,7 @@ package br.com.zup.Brazilian_Tax_API.services;
 import br.com.zup.Brazilian_Tax_API.controllers.TypesTaxRegisterDTO;
 import br.com.zup.Brazilian_Tax_API.models.TypesTax;
 import br.com.zup.Brazilian_Tax_API.repositorys.RepositoryTypesTax;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -27,7 +28,7 @@ public class TestServiceTypesTax {
 
     @BeforeEach
     public void setUp() {
-        typesTaxRegisterDTO = new TypesTaxRegisterDTO();
+        this.typesTaxRegisterDTO = new TypesTaxRegisterDTO();
         typesTaxRegisterDTO.setName("ICMS");
         typesTaxRegisterDTO.setDescription("Tax on the Circulation of Goods and Services");
         typesTaxRegisterDTO.setAliquota(18.0);
@@ -48,6 +49,21 @@ public class TestServiceTypesTax {
         Mockito.verify(repositoryTypesTax, Mockito.times(1)).save(Mockito.any(TypesTax.class));
     }
 
+
+    @Test
+    public void testWhenRegisterTypesTaxWithNameAndTypeAlreadyExists(){
+        Mockito.when(repositoryTypesTax.existsByNameAndDescriptionAndAliquota(
+                Mockito.anyString(), Mockito.anyString(), Mockito.anyDouble()
+        )).thenReturn(true);
+
+        IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, () ->
+                serviceTypesTax.registerTypesTax(typesTaxRegisterDTO)
+        );
+
+        Assertions.assertEquals("The type of tax already exists", exception.getMessage());
+
+        Mockito.verify(repositoryTypesTax, Mockito.times(0)).save(Mockito.any());
+    }
 }
 
 

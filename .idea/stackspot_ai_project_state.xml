@@ -6,7 +6,7 @@
         <entry key="alicia.feliciano@zup.com.br">
           <value>
             <ProjectStateData>
-              <option name="conversationId" value="01JDWM2JT33XK5WPBSZTXC753Y" />
+              <option name="conversationId" value="01JDW51DG3SX26CHXD1V8CVV1J" />
               <option name="indexedFiles">
                 <map>
                   <entry key="$PROJECT_DIR$/Brazilian_Tax_API/pom.xml" value="273400" />
@@ -16,8 +16,9 @@
                   <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/main/java/br/com/zup/Brazilian_Tax_API/services/ServiceTypesTax.java" value="243031" />
                   <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/main/java/br/com/zup/Brazilian_Tax_API/services/mappers/MapperTypesTax.java" value="237525" />
                   <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/main/resources/application.yml" value="271802" />
-                  <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/test/java/br/com/zup/Brazilian_Tax_API/services/TestServiceTypesTax.java" value="270747" />
-                  <entry key="$PROJECT_DIR$/Brazilian_Tax_API/target/classes/application.yml" value="0" />
+                  <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/test/java/br/com/zup/Brazilian_Tax_API/BrazilianTaxApiApplicationTests.java" value="33" />
+                  <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/test/java/br/com/zup/Brazilian_Tax_API/services/TestServiceTypesTax.java" value="290498" />
+                  <entry key="$PROJECT_DIR$/Brazilian_Tax_API/target/classes/application.yml" value="273711" />
                   <entry key="$PROJECT_DIR$/README.md" value="0" />
                 </map>
               </option>
