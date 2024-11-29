@@ -1,6 +1,7 @@
 package br.com.zup.Brazilian_Tax_API.services.mappers;
 
 import br.com.zup.Brazilian_Tax_API.controllers.TypesTaxRegisterDTO;
+import br.com.zup.Brazilian_Tax_API.controllers.TypesTaxUpdateDTO;
 import br.com.zup.Brazilian_Tax_API.models.TypesTax;
 
 public class MapperTypesTax {
@@ -10,5 +11,12 @@ public class MapperTypesTax {
         typesTax.setDescription(typesTaxRegisterDTO.getDescription());
         typesTax.setAliquota(typesTaxRegisterDTO.getAliquota());
         return typesTax;
+    }
+
+    public static void UpdatesTypesTax(TypesTax typesTax, TypesTaxUpdateDTO typesTaxUpdateDTO) {
+        typesTax.setId(typesTaxUpdateDTO.getId());
+        typesTax.setName(typesTaxUpdateDTO.getName());
+        typesTax.setDescription(typesTaxUpdateDTO.getDescription());
+        typesTax.setAliquota(typesTaxUpdateDTO.getAliquota());
     }
 }

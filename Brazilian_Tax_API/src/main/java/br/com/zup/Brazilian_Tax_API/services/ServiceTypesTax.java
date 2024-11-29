@@ -1,11 +1,14 @@
 package br.com.zup.Brazilian_Tax_API.services;
 
 import br.com.zup.Brazilian_Tax_API.controllers.TypesTaxRegisterDTO;
+import br.com.zup.Brazilian_Tax_API.controllers.TypesTaxUpdateDTO;
 import br.com.zup.Brazilian_Tax_API.models.TypesTax;
 import br.com.zup.Brazilian_Tax_API.repositorys.RepositoryTypesTax;
 import br.com.zup.Brazilian_Tax_API.services.mappers.MapperTypesTax;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class ServiceTypesTax {
@@ -22,5 +25,18 @@ public class ServiceTypesTax {
             throw new IllegalArgumentException("The type of tax already exists");
         }
         return repositoryTypesTax.save(typesTax);
+    }
+
+    public TypesTax updateTypesTax(Long id, TypesTaxUpdateDTO typesTaxUpdateDTO) {
+        Optional<TypesTax> optional = repositoryTypesTax.findById(id);
+        if (optional.isEmpty()) {
+            throw new RuntimeException("Tax not found");
+        }
+
+        TypesTax typesTaxUpdate = optional.get();
+
+        MapperTypesTax.UpdatesTypesTax(typesTaxUpdate, typesTaxUpdateDTO);
+
+        return repositoryTypesTax.save(typesTaxUpdate);
     }
 }

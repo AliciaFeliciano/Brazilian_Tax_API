@@ -1,6 +1,7 @@
 package br.com.zup.Brazilian_Tax_API.services;
 
 import br.com.zup.Brazilian_Tax_API.controllers.TypesTaxRegisterDTO;
+import br.com.zup.Brazilian_Tax_API.controllers.TypesTaxUpdateDTO;
 import br.com.zup.Brazilian_Tax_API.models.TypesTax;
 import br.com.zup.Brazilian_Tax_API.repositorys.RepositoryTypesTax;
 import org.junit.jupiter.api.Assertions;
@@ -28,7 +29,7 @@ public class TestServiceTypesTax {
 
     private TypesTaxRegisterDTO typesTaxRegisterDTO;
 
-    private TypesTaxUpdadteDTO typesTaxUpdadteDTO;
+    private TypesTaxUpdateDTO typesTaxUpdateDTO;
 
     @BeforeEach
     public void setUp() {
@@ -53,7 +54,6 @@ public class TestServiceTypesTax {
         Mockito.verify(repositoryTypesTax, Mockito.times(1)).save(Mockito.any(TypesTax.class));
     }
 
-
     @Test
     public void testWhenRegisterTypesTaxWithNameAndTypeAlreadyExists(){
         Mockito.when(repositoryTypesTax.existsByNameAndDescriptionAndAliquota(
@@ -71,17 +71,18 @@ public class TestServiceTypesTax {
 
     //Teste de atualização
     @Test
-    public void testWhenTheTestTypeIsUpdatedInHappyPath(){
-        Mockito.when(repositoryTypesTax.findById(typesTaxUpdadteDTO.getId())).thenReturn(Optional.of(typesTaxUpdadteDTO));
-        Mockito.when(repositoryTypesTax.save(typesTaxUpdadteDTO)).thenReturn(typesTaxUpdadteDTO);
+    public void testWhenTheTestTypeIsUpdatedWithNonExistentId_ShouldFail() {
+        Long nonExistentId = 1L;
+        TypesTax mockTypesTax = new TypesTax();
+        Mockito.when(repositoryTypesTax.findById(nonExistentId)).thenReturn(Optional.of(mockTypesTax));
 
-        TypesTax registeredTax = serviceTypesTax.registerTypesTax(typesTaxUpdadteDTO);
+        RuntimeException exception = Assertions.assertThrows(RuntimeException.class, () ->
+                serviceTypesTax.updateTypesTax(nonExistentId, typesTaxUpdateDTO)
+        );
 
-        assertEquals(typesTaxUpdadteDTO.getName(), registeredTax.getName());
-        assertEquals(typesTaxUpdadteDTO.getDescription(), registeredTax.getDescription());
-        assertEquals(typesTaxUpdadteDTO.getAliquota(), registeredTax.getAliquota());
+        Assertions.assertEquals("Tax not found", exception.getMessage());
 
-        Mockito.verify(repositoryTypesTax, Mockito.times(1)).save(typesTaxUpdadteDTO);
+        Mockito.verify(repositoryTypesTax, Mockito.times(0)).save(Mockito.any());
     }
 }
 

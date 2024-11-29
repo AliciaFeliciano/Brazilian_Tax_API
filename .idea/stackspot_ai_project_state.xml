@@ -11,13 +11,14 @@
                 <map>
                   <entry key="$PROJECT_DIR$/Brazilian_Tax_API/pom.xml" value="273400" />
                   <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/main/java/br/com/zup/Brazilian_Tax_API/controllers/TypesTaxRegisterDTO.java" value="262004" />
+                  <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/main/java/br/com/zup/Brazilian_Tax_API/controllers/TypesTaxUpdateDTO.java" value="431586" />
                   <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/main/java/br/com/zup/Brazilian_Tax_API/models/TypesTax.java" value="211080" />
                   <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/main/java/br/com/zup/Brazilian_Tax_API/repositorys/RepositoryTypesTax.java" value="242860" />
-                  <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/main/java/br/com/zup/Brazilian_Tax_API/services/ServiceTypesTax.java" value="243031" />
-                  <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/main/java/br/com/zup/Brazilian_Tax_API/services/mappers/MapperTypesTax.java" value="237525" />
+                  <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/main/java/br/com/zup/Brazilian_Tax_API/services/ServiceTypesTax.java" value="431587" />
+                  <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/main/java/br/com/zup/Brazilian_Tax_API/services/mappers/MapperTypesTax.java" value="383385" />
                   <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/main/resources/application.yml" value="271802" />
                   <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/test/java/br/com/zup/Brazilian_Tax_API/BrazilianTaxApiApplicationTests.java" value="33" />
-                  <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/test/java/br/com/zup/Brazilian_Tax_API/services/TestServiceTypesTax.java" value="290498" />
+                  <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/test/java/br/com/zup/Brazilian_Tax_API/services/TestServiceTypesTax.java" value="432760" />
                   <entry key="$PROJECT_DIR$/Brazilian_Tax_API/target/classes/application.yml" value="273711" />
                   <entry key="$PROJECT_DIR$/README.md" value="0" />
                 </map>
