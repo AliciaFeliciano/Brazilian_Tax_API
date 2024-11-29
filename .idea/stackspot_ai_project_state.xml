@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectStateService">
+    <option name="data">
+      <map>
+        <entry key="alicia.feliciano@zup.com.br">
+          <value>
+            <ProjectStateData>
+              <option name="conversationId" value="01JDWB5J694S4Q119MWBN6ZCFW" />
+              <option name="indexedFiles">
+                <map>
+                  <entry key="$PROJECT_DIR$/Brazilian_Tax_API/pom.xml" value="266848" />
+                  <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/main/java/br/com/zup/Brazilian_Tax_API/controllers/TypesTaxRegisterDTO.java" value="262004" />
+                  <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/main/java/br/com/zup/Brazilian_Tax_API/models/TypesTax.java" value="211080" />
+                  <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/main/java/br/com/zup/Brazilian_Tax_API/repositorys/RepositoryTypesTax.java" value="242860" />
+                  <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/main/java/br/com/zup/Brazilian_Tax_API/services/ServiceTypesTax.java" value="243031" />
+                  <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/main/java/br/com/zup/Brazilian_Tax_API/services/mappers/MapperTypesTax.java" value="237525" />
+                  <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/test/java/br/com/zup/Brazilian_Tax_API/services/TestServiceTypesTax.java" value="266751" />
+                  <entry key="$PROJECT_DIR$/README.md" value="0" />
+                </map>
+              </option>
+              <option name="projectId" value="01JDW51DG3BWE64TDMGE6QRCA8" />
+            </ProjectStateData>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
