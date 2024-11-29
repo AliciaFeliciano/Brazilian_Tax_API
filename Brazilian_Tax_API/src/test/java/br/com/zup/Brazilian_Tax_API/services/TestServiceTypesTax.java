@@ -12,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
@@ -25,6 +27,8 @@ public class TestServiceTypesTax {
     private ServiceTypesTax serviceTypesTax;
 
     private TypesTaxRegisterDTO typesTaxRegisterDTO;
+
+    private TypesTaxUpdadteDTO typesTaxUpdadteDTO;
 
     @BeforeEach
     public void setUp() {
@@ -63,6 +67,21 @@ public class TestServiceTypesTax {
         Assertions.assertEquals("The type of tax already exists", exception.getMessage());
 
         Mockito.verify(repositoryTypesTax, Mockito.times(0)).save(Mockito.any());
+    }
+
+    //Teste de atualização
+    @Test
+    public void testWhenTheTestTypeIsUpdatedInHappyPath(){
+        Mockito.when(repositoryTypesTax.findById(typesTaxUpdadteDTO.getId())).thenReturn(Optional.of(typesTaxUpdadteDTO));
+        Mockito.when(repositoryTypesTax.save(typesTaxUpdadteDTO)).thenReturn(typesTaxUpdadteDTO);
+
+        TypesTax registeredTax = serviceTypesTax.registerTypesTax(typesTaxUpdadteDTO);
+
+        assertEquals(typesTaxUpdadteDTO.getName(), registeredTax.getName());
+        assertEquals(typesTaxUpdadteDTO.getDescription(), registeredTax.getDescription());
+        assertEquals(typesTaxUpdadteDTO.getAliquota(), registeredTax.getAliquota());
+
+        Mockito.verify(repositoryTypesTax, Mockito.times(1)).save(typesTaxUpdadteDTO);
     }
 }
 
