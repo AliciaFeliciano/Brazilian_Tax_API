@@ -52,4 +52,6 @@ public class ServiceTypesTax {
         return allTypesTax;
     }
 
+
+
 }

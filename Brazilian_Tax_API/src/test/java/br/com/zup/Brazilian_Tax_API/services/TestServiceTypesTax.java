@@ -196,6 +196,25 @@ public class TestServiceTypesTax {
         Mockito.verify(repositoryTypesTax, Mockito.times(1)).findAll();
     }
 
+    //Test para deletar uma taxa
+
+    @Test
+    public void testDeleteTypesTaxWithExistingId() {
+        Long existingId = 1L;
+        TypesTax existingTax = new TypesTax();
+        existingTax.setId(existingId);
+        existingTax.setName("ICMS");
+        existingTax.setDescription("Tax on the Circulation of Goods and Services");
+        existingTax.setAliquota(18.0);
+
+        Mockito.when(repositoryTypesTax.findById(existingId)).thenReturn(Optional.of(existingTax));
+
+        serviceTypesTax.deleteTypesTax(existingId);
+
+        Mockito.verify(repositoryTypesTax, Mockito.times(1)).deleteById(existingId);
+    }
+
+
 }
 
 
