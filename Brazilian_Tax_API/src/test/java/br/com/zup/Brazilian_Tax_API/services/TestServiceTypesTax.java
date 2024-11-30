@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -166,6 +167,34 @@ public class TestServiceTypesTax {
 
        Mockito.verify(repositoryTypesTax, Mockito.times(0)).save(Mockito.any());
    }
+
+   //Teste para listagem
+
+    @Test
+    public void testGetAllTypesTax() {
+        TypesTax tax1 = new TypesTax();
+        tax1.setId(1L);
+        tax1.setName("ICMS");
+        tax1.setDescription("Tax on the Circulation of Goods and Services");
+        tax1.setAliquota(18.0);
+
+        TypesTax tax2 = new TypesTax();
+        tax2.setId(2L);
+        tax2.setName("ISS");
+        tax2.setDescription("Imposto sobre Serviços");
+        tax2.setAliquota(5.0);
+
+        List<TypesTax> mockTaxList = List.of(tax1, tax2);
+
+        Mockito.when(repositoryTypesTax.findAll()).thenReturn(mockTaxList);
+
+        List<TypesTax> allTypesTax = serviceTypesTax.getAllTypesTax();
+
+        assertEquals(2, allTypesTax.size());
+        assertEquals("ICMS", allTypesTax.get(0).getName());
+        assertEquals("ISS", allTypesTax.get(1).getName());
+        Mockito.verify(repositoryTypesTax, Mockito.times(1)).findAll();
+    }
 
 }
 
