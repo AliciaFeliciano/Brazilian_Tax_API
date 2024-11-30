@@ -113,6 +113,32 @@ public class TestServiceTypesTax {
         Mockito.verify(repositoryTypesTax, Mockito.times(1)).save(existingTax);
     }
 
+   @Test
+    public void testWhenUpdateTypesTaxWithIsEqualsNonUpdate() {
+        Long existingId = 1L;
+        Long updatedId = 1L;
+
+        TypesTax existingTax = new TypesTax();
+
+        existingTax.setId(existingId);
+        existingTax.setName("ICMS");
+        existingTax.setDescription("Tax on the Circulation of Goods and Services");
+        existingTax.setAliquota(18.0);
+        TypesTaxUpdateDTO updateDTO = new TypesTaxUpdateDTO();
+        updateDTO.setId(existingId);
+        updateDTO.setName("ICMS");
+        updateDTO.setDescription("Tax on the Circulation of Goods and Services");
+        updateDTO.setAliquota(18.0);
+        Mockito.when(repositoryTypesTax.findById(existingId)).thenReturn(Optional.of(existingTax));
+
+       RuntimeException exception = assertThrows(RuntimeException.class, () ->
+               serviceTypesTax.updateTypesTax(updatedId, typesTaxUpdateDTO)
+       );
+
+       Assertions.assertEquals("The first rate equals the first", exception.getMessage());
+
+       Mockito.verify(repositoryTypesTax, Mockito.times(0)).save(Mockito.any());
+   }
 
 }
 
