@@ -47,5 +47,9 @@ public class ServiceTypesTax {
         return repositoryTypesTax.save(existingTax);
     }
 
+    public List<TypesTax> getAllTypesTax() {
+        final List<TypesTax> allTypesTax = repositoryTypesTax.findAll();
+        return allTypesTax;
+    }
 
 }
