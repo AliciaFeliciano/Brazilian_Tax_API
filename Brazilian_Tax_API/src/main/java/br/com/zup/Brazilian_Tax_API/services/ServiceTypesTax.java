@@ -33,10 +33,16 @@ public class ServiceTypesTax {
             throw new RuntimeException("Tax not found");
         }
 
-        TypesTax typesTaxUpdate = optional.get();
+        TypesTax existingTax = optional.get();
 
-        MapperTypesTax.UpdatesTypesTax(typesTaxUpdate, typesTaxUpdateDTO);
+        if (existingTax.getName().equals(typesTaxUpdateDTO.getName()) &&
+                existingTax.getDescription().equals(typesTaxUpdateDTO.getDescription()) &&
+                existingTax.getAliquota() == typesTaxUpdateDTO.getAliquota()) {
+            throw new RuntimeException("No changes detected");
+        }
 
-        return repositoryTypesTax.save(typesTaxUpdate);
+        MapperTypesTax.UpdatesTypesTax(existingTax, typesTaxUpdateDTO);
+
+        return repositoryTypesTax.save(existingTax);
     }
 }
