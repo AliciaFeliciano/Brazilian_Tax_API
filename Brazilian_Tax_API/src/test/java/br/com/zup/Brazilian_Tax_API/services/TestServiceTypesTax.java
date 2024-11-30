@@ -214,6 +214,17 @@ public class TestServiceTypesTax {
         Mockito.verify(repositoryTypesTax, Mockito.times(1)).deleteById(existingId);
     }
 
+    @Test
+    public void testDeleteTypesTaxWithNonExistentId() {
+        Long nonExistentId = 1L;
+
+        Mockito.when(repositoryTypesTax.findById(nonExistentId)).thenReturn(Optional.empty());
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> serviceTypesTax.deleteTypesTax(nonExistentId));
+
+        Assertions.assertEquals("Tax not found", exception.getMessage());
+        Mockito.verify(repositoryTypesTax, Mockito.times(0)).deleteById(nonExistentId);
+    }
 
 }
 
