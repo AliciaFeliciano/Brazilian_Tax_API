@@ -215,7 +215,7 @@ public class TestServiceTypesTax {
 
     @Test
     public void testDeleteTypesTaxWithNonExistentId() {
-        Long nonExistentId = 1L;
+        Long nonExistentId = 99L;
 
         Mockito.when(repositoryTypesTax.findById(nonExistentId)).thenReturn(Optional.empty());
 

@@ -52,6 +52,12 @@ public class ServiceTaxCalculator {
         return repositoryTaxCalculator.findAll();
     }
 
-
-
+    public void deleteTaxCalculator(Long id) {
+        Optional<TaxCalculator> taxCalculator = repositoryTaxCalculator.findById(id);
+        if (taxCalculator.isPresent()) {
+            repositoryTaxCalculator.deleteById(id);
+        } else {
+            throw new RuntimeException("TaxCalculator not found");
+        }
+    }
 }
