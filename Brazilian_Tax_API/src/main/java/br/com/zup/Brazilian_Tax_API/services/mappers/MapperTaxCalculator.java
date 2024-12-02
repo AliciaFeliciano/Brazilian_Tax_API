@@ -43,17 +43,13 @@ public class MapperTaxCalculator {
         return taxCalculator;
     }
 
-    public TaxCalculator fromResponseTaxCalculator(TaxCalculatorResponseDTO taxCalculatorResponseDTO) {
-        TaxCalculator taxCalculator = new TaxCalculator();
-        taxCalculator.setId(taxCalculatorResponseDTO.getId());
-        taxCalculator.setValueTax(taxCalculatorResponseDTO.getValueTax());
-
-        TypesTax typesTax = repositoryTypesTax.findById(taxCalculatorResponseDTO.getTaxId())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid tax ID: " + taxCalculatorResponseDTO.getTaxId()));
-
-        taxCalculator.setTax(typesTax);
-
-        return taxCalculator;
+    public TaxCalculatorResponseDTO fromResponseTaxCalculator(TaxCalculator taxCalculator) {
+        TaxCalculatorResponseDTO responseDTO = new TaxCalculatorResponseDTO();
+        responseDTO.setId(taxCalculator.getId());
+        responseDTO.setValueTax(taxCalculator.getValueTax());
+        responseDTO.setTaxId(taxCalculator.getTax().getId());
+        return responseDTO;
     }
+
 
 }
