@@ -41,6 +41,7 @@ public class TestControllerTypesTax {
         typesTax.setAliquota(18.0);
     }
 
+    //Test de registro
     @Test
     public void testWhenRegisterTypesTaxHappyPath() throws Exception {
         TypesTaxRegisterDTO typesTaxRegisterDTO = new TypesTaxRegisterDTO();
@@ -64,6 +65,7 @@ public class TestControllerTypesTax {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.aliquota", CoreMatchers.is(18.0)));
     }
 
+    //test de listagem
     @Test
     public void testWhenGetAllTypesTax() throws Exception {
         TypesTax tax1 = new TypesTax();
@@ -98,5 +100,6 @@ public class TestControllerTypesTax {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].description", CoreMatchers.is("Service Tax")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].aliquota", CoreMatchers.is(5.0)));
     }
+
 
 }
