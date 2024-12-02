@@ -15,6 +15,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -22,6 +23,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @WebMvcTest(ControllerTaxCalculator.class)
@@ -60,7 +63,7 @@ public class TestControllerTaxCalculator {
 
         String json = mapper.writeValueAsString(taxCalculatorRegisterDTO);
 
-        Mockito.when(mapperTaxCalculator.fromRegisterTaxCalculator(Mockito.any(TaxCalculatorRegisterDTO.class)))
+        when(mapperTaxCalculator.fromRegisterTaxCalculator(Mockito.any(TaxCalculatorRegisterDTO.class)))
                 .thenAnswer(invocation -> {
                     TaxCalculator taxCalculator = new TaxCalculator();
                     taxCalculator.setValueTax(100.00);
@@ -68,13 +71,13 @@ public class TestControllerTaxCalculator {
                     return taxCalculator;
                 });
 
-        Mockito.when(serviceTaxCalculator.registerTaxCalculator(Mockito.any(TaxCalculator.class)))
+        when(serviceTaxCalculator.registerTaxCalculator(Mockito.any(TaxCalculator.class)))
                 .thenAnswer(invocation -> {
                     taxCalculator.setValueTax(100.00);
                     return taxCalculator;
                 });
 
-        Mockito.when(mapperTaxCalculator.fromResponseTaxCalculator(Mockito.any(TaxCalculator.class)))
+        when(mapperTaxCalculator.fromResponseTaxCalculator(Mockito.any(TaxCalculator.class)))
                 .thenAnswer(invocation -> {
                     TaxCalculatorResponseDTO responseDTO = new TaxCalculatorResponseDTO();
                     responseDTO.setId(1L);
@@ -91,6 +94,48 @@ public class TestControllerTaxCalculator {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.valueTax", CoreMatchers.is(100.00)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.taxId", CoreMatchers.is(1)));
     }
+
+    //Test listing
+    @Test
+    public void testWhenGetAllTaxCalculator() throws Exception {
+        TypesTax typesTax1 = new TypesTax();
+        typesTax1.setId(1L);
+        typesTax1.setName("ICMS");
+        typesTax1.setDescription("Tax on the Circulation of Goods and Services");
+
+        TaxCalculator tax1 = new TaxCalculator();
+        tax1.setId(1L);
+        tax1.setValueTax(100.00);
+        tax1.setTax(typesTax1);
+
+        TypesTax typesTax2 = new TypesTax();
+        typesTax2.setId(2L);
+        typesTax2.setName("ISS");
+        typesTax2.setDescription("Service Tax");
+
+        TaxCalculator tax2 = new TaxCalculator();
+        tax2.setId(2L);
+        tax2.setValueTax(160.00);
+        tax2.setTax(typesTax2);
+
+        List<TaxCalculator> mockTaxList = List.of(tax1, tax2);
+
+        Mockito.when(serviceTaxCalculator.getAllTaxCalculators()).thenReturn(mockTaxList);
+
+        mvc.perform(
+                        MockMvcRequestBuilders
+                                .get("/api/tax/calculators")
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.length()", CoreMatchers.is(2)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id", CoreMatchers.is(1)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].valueTax", CoreMatchers.is(100.00)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].id", CoreMatchers.is(2)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].valueTax", CoreMatchers.is(160.00)));
+
+    }
+
     //Test deleted
     @Test
     public void testDeleteTaxCalculatorWithExistingId() throws Exception {

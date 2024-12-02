@@ -45,12 +45,12 @@ public class MapperTaxCalculator {
         return taxCalculator;
     }
 
-    public TaxCalculatorResponseDTO fromResponseTaxCalculator(TaxCalculator taxCalculator) {
-        TaxCalculatorResponseDTO responseDTO = new TaxCalculatorResponseDTO();
-        responseDTO.setId(taxCalculator.getId());
-        responseDTO.setValueTax(taxCalculator.getValueTax());
-        responseDTO.setTaxId(taxCalculator.getTax().getId());
-        return responseDTO;
+    public static TaxCalculatorResponseDTO fromResponseTaxCalculator(TaxCalculator taxCalculator) {
+        TaxCalculatorResponseDTO updateTaxCalculator = new TaxCalculatorResponseDTO();
+        updateTaxCalculator.setId(taxCalculator.getId());
+        updateTaxCalculator.setValueTax(taxCalculator.getValueTax());
+        updateTaxCalculator.setTaxId(taxCalculator.getTax().getId());
+        return updateTaxCalculator;
     }
 
 
