@@ -41,7 +41,7 @@ public class TestControllerTypesTax {
         typesTax.setAliquota(18.0);
     }
 
-    //Test de register
+    //Test register
     @Test
     public void testWhenRegisterTypesTaxHappyPath() throws Exception {
         TypesTaxRegisterDTO typesTaxRegisterDTO = new TypesTaxRegisterDTO();
