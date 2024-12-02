@@ -1,6 +1,7 @@
 package br.com.zup.Brazilian_Tax_API.controllers;
 
 import br.com.zup.Brazilian_Tax_API.controllers.dtos.TypesTaxRegisterDTO;
+import br.com.zup.Brazilian_Tax_API.controllers.dtos.TypesTaxUpdateDTO;
 import br.com.zup.Brazilian_Tax_API.models.TypesTax;
 import br.com.zup.Brazilian_Tax_API.services.ServiceTypesTax;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,6 +16,9 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+import java.util.List;
+
 
 @WebMvcTest(ControllerTypesTax.class)
 public class TestControllerTypesTax {
@@ -59,4 +63,40 @@ public class TestControllerTypesTax {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.description", CoreMatchers.is("Tax on the Circulation of Goods and Services")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.aliquota", CoreMatchers.is(18.0)));
     }
+
+    @Test
+    public void testWhenGetAllTypesTax() throws Exception {
+        TypesTax tax1 = new TypesTax();
+        tax1.setId(1L);
+        tax1.setName("ICMS");
+        tax1.setDescription("Tax on the Circulation of Goods and Services");
+        tax1.setAliquota(18.0);
+
+        TypesTax tax2 = new TypesTax();
+        tax2.setId(2L);
+        tax2.setName("ISS");
+        tax2.setDescription("Service Tax");
+        tax2.setAliquota(5.0);
+
+        List<TypesTax> mockTaxList = List.of(tax1, tax2);
+
+        Mockito.when(serviceTypesTax.getAllTypesTax()).thenReturn(mockTaxList);
+
+        mvc.perform(
+                        MockMvcRequestBuilders
+                                .get("/api/tax/types")
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.length()", CoreMatchers.is(2)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id", CoreMatchers.is(1)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].name", CoreMatchers.is("ICMS")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].description", CoreMatchers.is("Tax on the Circulation of Goods and Services")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].aliquota", CoreMatchers.is(18.0)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].id", CoreMatchers.is(2)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].name", CoreMatchers.is("ISS")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].description", CoreMatchers.is("Service Tax")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].aliquota", CoreMatchers.is(5.0)));
+    }
+
 }

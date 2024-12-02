@@ -35,5 +35,7 @@ public class ControllerTypesTax {
             return ResponseEntity.status(422).body(Map.of("message", exception.getMessage()));
         }
     }
+
+
 }
 

@@ -28,16 +28,16 @@ public class TestServiceTypesTax {
     @Autowired
     private ServiceTypesTax serviceTypesTax;
 
-    private TypesTaxRegisterDTO typesTaxRegisterDTO;
+    private TypesTax typesTax;
 
     private TypesTaxUpdateDTO typesTaxUpdateDTO;
 
     @BeforeEach
     public void setUp() {
-        this.typesTaxRegisterDTO = new TypesTaxRegisterDTO();
-        typesTaxRegisterDTO.setName("ICMS");
-        typesTaxRegisterDTO.setDescription("Tax on the Circulation of Goods and Services");
-        typesTaxRegisterDTO.setAliquota(18.0);
+        this.typesTax = new TypesTax();
+        typesTax.setName("ICMS");
+        typesTax.setDescription("Tax on the Circulation of Goods and Services");
+        typesTax.setAliquota(18.0);
     }
 
     @Test
@@ -46,11 +46,11 @@ public class TestServiceTypesTax {
                 Mockito.anyString(), Mockito.anyString(), Mockito.anyDouble()
         )).thenReturn(false);
 
-        TypesTax registeredTax = serviceTypesTax.registerTypesTax(typesTaxRegisterDTO);
+        TypesTax registeredTax = serviceTypesTax.registerTypesTax(typesTax);
 
-        assertEquals(typesTaxRegisterDTO.getName(), registeredTax.getName());
-        assertEquals(typesTaxRegisterDTO.getDescription(), registeredTax.getDescription());
-        assertEquals(typesTaxRegisterDTO.getAliquota(), registeredTax.getAliquota());
+        assertEquals(typesTax.getName(), registeredTax.getName());
+        assertEquals(typesTax.getDescription(), registeredTax.getDescription());
+        assertEquals(typesTax.getAliquota(), registeredTax.getAliquota());
 
         Mockito.verify(repositoryTypesTax, Mockito.times(1)).save(Mockito.any(TypesTax.class));
     }
@@ -62,7 +62,7 @@ public class TestServiceTypesTax {
         )).thenReturn(true);
 
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
-                serviceTypesTax.registerTypesTax(typesTaxRegisterDTO)
+                serviceTypesTax.registerTypesTax(typesTax)
         );
 
         Assertions.assertEquals("The type of tax already exists", exception.getMessage());
