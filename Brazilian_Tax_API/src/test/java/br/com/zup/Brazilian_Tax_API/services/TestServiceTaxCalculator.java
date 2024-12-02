@@ -76,6 +76,7 @@ public class TestServiceTaxCalculator {
 
     //Test update TaxCalculator
 
+    @Test
     public void testWhenUpdateTaxCalculatorDoesNotHappyPath() {
         Long nonExistentId = 1L;
         TaxCalculator mockTaxCalculator = new TaxCalculator();
