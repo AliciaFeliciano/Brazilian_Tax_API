@@ -131,6 +131,21 @@ public class TestControllerTypesTax {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.aliquota", CoreMatchers.is(20.0)));
     }
 
+    //Test deleted
+    @Test
+    public void testDeleteTypesTaxWithNonExistentId() throws Exception {
+        Long nonExistentId = 99L;
+
+        Mockito.doThrow(new RuntimeException("Tax not found"))
+                .when(serviceTypesTax).deleteTypesTax(nonExistentId);
+
+        mvc.perform(MockMvcRequestBuilders
+                        .delete("/api/tax/types/{id}", nonExistentId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+
+        Mockito.verify(serviceTypesTax, Mockito.times(1)).deleteTypesTax(nonExistentId);
+    }
 
 
 }
