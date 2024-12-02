@@ -8,6 +8,7 @@ import br.com.zup.Brazilian_Tax_API.repositorys.RepositoryTypesTax;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -46,6 +47,11 @@ public class ServiceTaxCalculator {
 
         return repositoryTaxCalculator.save(existingTaxCalculator);
     }
+
+    public List<TaxCalculator> getAllTaxCalculators() {
+        return repositoryTaxCalculator.findAll();
+    }
+
 
 
 }

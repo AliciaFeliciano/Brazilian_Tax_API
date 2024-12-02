@@ -1,6 +1,7 @@
 package br.com.zup.Brazilian_Tax_API.services.mappers;
 
 import br.com.zup.Brazilian_Tax_API.controllers.taxCalculatorDTOs.TaxCalculatorRegisterDTO;
+import br.com.zup.Brazilian_Tax_API.controllers.taxCalculatorDTOs.TaxCalculatorResponseDTO;
 import br.com.zup.Brazilian_Tax_API.controllers.taxCalculatorDTOs.TaxCalculatorUpdateDTO;
 import br.com.zup.Brazilian_Tax_API.models.TaxCalculator;
 import br.com.zup.Brazilian_Tax_API.models.TypesTax;
@@ -41,4 +42,18 @@ public class MapperTaxCalculator {
 
         return taxCalculator;
     }
+
+    public TaxCalculator fromResponseTaxCalculator(TaxCalculatorResponseDTO taxCalculatorResponseDTO) {
+        TaxCalculator taxCalculator = new TaxCalculator();
+        taxCalculator.setId(taxCalculatorResponseDTO.getId());
+        taxCalculator.setValueTax(taxCalculatorResponseDTO.getValueTax());
+
+        TypesTax typesTax = repositoryTypesTax.findById(taxCalculatorResponseDTO.getTaxId())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid tax ID: " + taxCalculatorResponseDTO.getTaxId()));
+
+        taxCalculator.setTax(typesTax);
+
+        return taxCalculator;
+    }
+
 }

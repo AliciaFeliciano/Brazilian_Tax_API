@@ -148,11 +148,11 @@ public class TestServiceTaxCalculator {
 
         Mockito.when(repositoryTaxCalculator.findAll()).thenReturn(mockTaxCalculatorList);
 
-        List<TaxCalculatorResponseDTO> allTaxCalculators = serviceTaxCalculator.getAllTaxCalculators();
+        List<TaxCalculator> allTaxCalculators = serviceTaxCalculator.getAllTaxCalculators();
 
         assertEquals(2, allTaxCalculators.size());
-        assertEquals("ICMS", allTaxCalculators.get(0).getTaxName());
-        assertEquals("ISS", allTaxCalculators.get(1).getTaxName());
+        assertEquals("ICMS", allTaxCalculators.get(0).getTax().getName());
+        assertEquals("ISS", allTaxCalculators.get(1).getTax().getName());
         Mockito.verify(repositoryTaxCalculator, Mockito.times(1)).findAll();
     }
 
