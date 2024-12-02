@@ -104,26 +104,31 @@ public class TestControllerTypesTax {
     //Test de update
     @Test
     public void testWhenUpdateTypesTaxHappyPath() throws Exception {
-        TypesTaxUpdateDTO typesTaxUpdateDTO = new TypesTaxUpdateDTO();
-        typesTaxUpdateDTO.setId(1L);
-        typesTaxUpdateDTO.setName("ICMS");
-        typesTaxUpdateDTO.setDescription("Tax on the Circulation of Goods and Services");
-        typesTaxUpdateDTO.setAliquota(18.0);
-        String json = mapper.writeValueAsString(typesTaxUpdateDTO);
+        TypesTax typesTax = new TypesTax();
+        typesTax.setId(1L);
+        typesTax.setName("ICMS");
+        typesTax.setDescription("Tax on the Circulation of Goods and Services");
+        typesTax.setAliquota(20.0);
 
-        Mockito.when(serviceTypesTax.updateTypesTax(Mockito.eq(1L), Mockito.any(TypesTaxUpdateDTO.class))).thenReturn(typesTax);
+        TypesTaxUpdateDTO updateDTO = new TypesTaxUpdateDTO();
+        updateDTO.setName("ICMS");
+        updateDTO.setDescription("Tax on the Circulation of Goods and Services");
+        updateDTO.setAliquota(20.0);
 
-        mvc.perform(
-                        MockMvcRequestBuilders
-                                .put("/api/tax/types/1")
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(json)
-                )
+        String json = mapper.writeValueAsString(updateDTO);
+
+        Mockito.when(serviceTypesTax.updateTypesTax(Mockito.anyLong(), Mockito.any(TypesTaxUpdateDTO.class)))
+                .thenReturn(typesTax);
+
+        mvc.perform(MockMvcRequestBuilders
+                        .put("/api/tax/types/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id", CoreMatchers.is(typesTax.getId())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id", CoreMatchers.is(1)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name", CoreMatchers.is("ICMS")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.description", CoreMatchers.is("Tax on the Circulation of Goods and Services")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.aliquota", CoreMatchers.is(18.0)));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.aliquota", CoreMatchers.is(20.0)));
     }
 
 

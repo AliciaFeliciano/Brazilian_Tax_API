@@ -2,6 +2,7 @@ package br.com.zup.Brazilian_Tax_API.controllers;
 
 import br.com.zup.Brazilian_Tax_API.controllers.dtos.TypesTaxRegisterDTO;
 import br.com.zup.Brazilian_Tax_API.controllers.dtos.TypesTaxResponseDTO;
+import br.com.zup.Brazilian_Tax_API.controllers.dtos.TypesTaxUpdateDTO;
 import br.com.zup.Brazilian_Tax_API.models.TypesTax;
 import br.com.zup.Brazilian_Tax_API.services.ServiceTypesTax;
 import br.com.zup.Brazilian_Tax_API.services.mappers.MapperTypesTax;
@@ -49,6 +50,19 @@ public class ControllerTypesTax {
             return ResponseEntity.ok(responseDTOList);
         } catch (RuntimeException exception) {
             return ResponseEntity.status(500).body(Map.of("message", exception.getMessage()));
+        }
+    }
+
+    @PutMapping("/types/{id}")
+    public ResponseEntity<?> updateTypesTax(
+            @PathVariable Long id,
+            @RequestBody @Valid TypesTaxUpdateDTO typesTaxUpdateDTO) {
+        try {
+            TypesTax updatedTypesTax = serviceTypesTax.updateTypesTax(id, typesTaxUpdateDTO);
+            TypesTaxResponseDTO responseDTO = MapperTypesTax.fromResponseTypesTax(updatedTypesTax);
+            return ResponseEntity.ok(responseDTO);
+        } catch (RuntimeException exception) {
+            return ResponseEntity.status(422).body(Map.of("message", exception.getMessage()));
         }
     }
 
