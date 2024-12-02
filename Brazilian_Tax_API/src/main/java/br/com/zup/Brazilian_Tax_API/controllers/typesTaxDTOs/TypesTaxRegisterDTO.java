@@ -1,4 +1,4 @@
-package br.com.zup.Brazilian_Tax_API.controllers.dtos;
+package br.com.zup.Brazilian_Tax_API.controllers.typesTaxDTOs;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -7,9 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class TypesTaxUpdateDTO {
-
-    private Long id;
+public class TypesTaxRegisterDTO {
 
     @NotBlank
     private String name;
@@ -19,4 +17,5 @@ public class TypesTaxUpdateDTO {
 
     @NotNull
     private double aliquota;
+
 }

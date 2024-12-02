@@ -1,7 +1,6 @@
 package br.com.zup.Brazilian_Tax_API.services;
 
-import br.com.zup.Brazilian_Tax_API.controllers.dtos.TypesTaxRegisterDTO;
-import br.com.zup.Brazilian_Tax_API.controllers.dtos.TypesTaxUpdateDTO;
+import br.com.zup.Brazilian_Tax_API.controllers.typesTaxDTOs.TypesTaxUpdateDTO;
 import br.com.zup.Brazilian_Tax_API.models.TypesTax;
 import br.com.zup.Brazilian_Tax_API.repositorys.RepositoryTypesTax;
 import org.junit.jupiter.api.Assertions;

@@ -1,5 +1,8 @@
 package br.com.zup.Brazilian_Tax_API.services;
 
+import br.com.zup.Brazilian_Tax_API.models.TaxCalculator;
+import br.com.zup.Brazilian_Tax_API.models.TypesTax;
+import br.com.zup.Brazilian_Tax_API.repositorys.RepositoryTaxCalculator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -21,25 +24,33 @@ public class TestServiceTaxCalculator {
     private ServiceTaxCalculator serviceTaxCalculator;
 
     private TaxCalculator taxCalculator;
+    private TypesTax typesTax;
 
     @BeforeEach
     public void setUp() {
+        this.typesTax = new TypesTax();
+        typesTax.setId(1L);
+        typesTax.setName("ICMS");
+
         this.taxCalculator = new TaxCalculator();
-        taxCalculator.setValueBase("Base Value");
-        taxCalculator.setTypesTax("ICMS");
+        taxCalculator.setValueBase(90.50);
+        taxCalculator.setTax(typesTax);
     }
 
     // Test register TaxCalculator
     @Test
     public void testWhenRegisterTaxCalculatorHappyPath() {
         Mockito.when(repositoryTaxCalculator.existsByValueBaseAndTypesTax(
-                Mockito.anyString(), Mockito.anyString()
+                Mockito.anyDouble(), Mockito.any(TypesTax.class)
         )).thenReturn(false);
+
+        Mockito.when(repositoryTaxCalculator.save(Mockito.any(TaxCalculator.class)))
+                .thenAnswer(invocation -> invocation.getArgument(0));
 
         TaxCalculator registeredTaxCalculator = serviceTaxCalculator.registerTaxCalculator(taxCalculator);
 
         assertEquals(taxCalculator.getValueBase(), registeredTaxCalculator.getValueBase());
-        assertEquals(taxCalculator.getTypesTax(), registeredTaxCalculator.getTypesTax());
+        assertEquals(taxCalculator.getTax(), registeredTaxCalculator.getTax());
 
         Mockito.verify(repositoryTaxCalculator, Mockito.times(1)).save(Mockito.any(TaxCalculator.class));
     }
