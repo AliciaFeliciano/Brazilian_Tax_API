@@ -19,6 +19,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.List;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @WebMvcTest(ControllerTaxCalculator.class)
@@ -87,6 +89,37 @@ public class TestControllerTaxCalculator {
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.valueTax", CoreMatchers.is(100.00)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.taxId", CoreMatchers.is(1)));
+    }
+
+    @Test
+    public void testWhenListTaxCalculatorsHappyPath() throws Exception {
+        TaxCalculator taxCalculator1 = new TaxCalculator();
+        taxCalculator1.setId(1L);
+        taxCalculator1.setValueTax(100.00);
+        taxCalculator1.setTax(typesTax);
+
+        TaxCalculator taxCalculator2 = new TaxCalculator();
+        taxCalculator2.setId(2L);
+        taxCalculator2.setValueTax(200.00);
+        taxCalculator2.setTax(typesTax);
+
+        List<TaxCalculator> taxCalculators = List.of(taxCalculator1, taxCalculator2);
+
+        Mockito.when(serviceTaxCalculator.listAllTaxCalculators()).thenReturn(taxCalculators);
+
+        Mockito.when(mapperTaxCalculator.fromResponseTaxCalculator(taxCalculator1))
+                .thenReturn(new TaxCalculatorResponseDTO(1L, 100.00, 1L));
+        Mockito.when(mapperTaxCalculator.fromResponseTaxCalculator(taxCalculator2))
+                .thenReturn(new TaxCalculatorResponseDTO(2L, 200.00, 1L));
+
+        mvc.perform(MockMvcRequestBuilders.get("/api/tax/calculators")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id", CoreMatchers.is(1)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].valueTax", CoreMatchers.is(100.00)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].id", CoreMatchers.is(2)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].valueTax", CoreMatchers.is(200.00)));
     }
 }
 
