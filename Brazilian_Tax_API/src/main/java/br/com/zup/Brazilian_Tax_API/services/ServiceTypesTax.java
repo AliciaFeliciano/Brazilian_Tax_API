@@ -1,6 +1,5 @@
 package br.com.zup.Brazilian_Tax_API.services;
 
-import br.com.zup.Brazilian_Tax_API.controllers.dtos.TypesTaxRegisterDTO;
 import br.com.zup.Brazilian_Tax_API.controllers.dtos.TypesTaxUpdateDTO;
 import br.com.zup.Brazilian_Tax_API.models.TypesTax;
 import br.com.zup.Brazilian_Tax_API.repositorys.RepositoryTypesTax;
@@ -14,11 +13,15 @@ import java.util.Optional;
 @Service
 public class ServiceTypesTax {
 
-    @Autowired
-    private RepositoryTypesTax repositoryTypesTax;
 
-    public TypesTax registerTypesTax(TypesTaxRegisterDTO typesTaxRegisterDTO) {
-        TypesTax typesTax = MapperTypesTax.RegisterTypesTax(typesTaxRegisterDTO);
+    private final RepositoryTypesTax repositoryTypesTax;
+
+    @Autowired
+    public ServiceTypesTax(RepositoryTypesTax repositoryTypesTax) {
+        this.repositoryTypesTax = repositoryTypesTax;
+    }
+
+    public TypesTax registerTypesTax(TypesTax typesTax) {
         boolean exist = repositoryTypesTax.existsByNameAndDescriptionAndAliquota(
                 typesTax.getName(), typesTax.getDescription(), typesTax.getAliquota()
         );
@@ -42,21 +45,21 @@ public class ServiceTypesTax {
             throw new RuntimeException("No changes detected");
         }
 
-        MapperTypesTax.UpdatesTypesTax(existingTax, typesTaxUpdateDTO);
+        MapperTypesTax.fromUpdatesTypesTax(existingTax, typesTaxUpdateDTO);
 
         return repositoryTypesTax.save(existingTax);
     }
 
     public List<TypesTax> getAllTypesTax() {
-        final List<TypesTax> allTypesTax = repositoryTypesTax.findAll();
-        return allTypesTax;
+        return repositoryTypesTax.findAll();
     }
 
     public TypesTax deleteTypesTax(Long id) {
         Optional<TypesTax> optional = repositoryTypesTax.findById(id);
         if (optional.isEmpty()) {
-           throw new RuntimeException("Tax not found");
+            throw new RuntimeException("Tax not found");
         }
-       return optional.get();
+        repositoryTypesTax.deleteById(id);
+        return optional.get();
     }
 }

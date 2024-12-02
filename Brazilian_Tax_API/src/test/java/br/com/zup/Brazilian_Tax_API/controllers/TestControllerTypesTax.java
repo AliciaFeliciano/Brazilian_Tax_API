@@ -13,7 +13,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -32,6 +31,7 @@ public class TestControllerTypesTax {
     void setUp() {
         mapper = new ObjectMapper();
         typesTax = new TypesTax();
+        typesTax.setId(1L);
         typesTax.setName("ICMS");
         typesTax.setDescription("Tax on the Circulation of Goods and Services");
         typesTax.setAliquota(18.0);
@@ -39,13 +39,17 @@ public class TestControllerTypesTax {
 
     @Test
     public void testWhenRegisterTypesTaxHappyPath() throws Exception {
-        TypesTaxRegisterDTO typesTaxRegisterDTO = new TypesTaxRegisterDTO("ICMS", "Tax on the Circulation of Goods and Services", 18.0);
+        TypesTaxRegisterDTO typesTaxRegisterDTO = new TypesTaxRegisterDTO();
+        typesTaxRegisterDTO.setName("ICMS");
+        typesTaxRegisterDTO.setDescription("Tax on the Circulation of Goods and Services");
+        typesTaxRegisterDTO.setAliquota(18.0);
+
         String json = mapper.writeValueAsString(typesTaxRegisterDTO);
 
-        Mockito.when(serviceTypesTax.register(Mockito.any(TypesTax.class))).thenReturn(typesTax);
+        Mockito.when(serviceTypesTax.registerTypesTax(Mockito.any(TypesTax.class))).thenReturn(typesTax);
         mvc.perform(
                         MockMvcRequestBuilders
-                                .post("/tipos")
+                                .post("/api/tax/types")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(json)
                 )
@@ -55,5 +59,4 @@ public class TestControllerTypesTax {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.description", CoreMatchers.is("Tax on the Circulation of Goods and Services")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.aliquota", CoreMatchers.is(18.0)));
     }
-
 }

@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class BrazilianTaxApiApplication {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(BrazilianTaxApiApplication.class, args);
 	}
 
