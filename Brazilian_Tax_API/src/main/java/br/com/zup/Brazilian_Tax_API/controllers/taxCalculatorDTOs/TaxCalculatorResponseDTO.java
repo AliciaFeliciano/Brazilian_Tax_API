@@ -8,11 +8,12 @@ import lombok.Setter;
 @Setter
 public class TaxCalculatorResponseDTO {
     @NotNull
-    private long id;
+    private Long id;
 
     @NotNull
     private double valueTax;
 
     @NotNull
     private Long taxId;
+
 }

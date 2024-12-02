@@ -9,6 +9,8 @@ import br.com.zup.Brazilian_Tax_API.repositorys.RepositoryTypesTax;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
 @Component
 public class MapperTaxCalculator {
 

@@ -2,6 +2,7 @@ package br.com.zup.Brazilian_Tax_API.controllers;
 
 import br.com.zup.Brazilian_Tax_API.controllers.taxCalculatorDTOs.TaxCalculatorRegisterDTO;
 import br.com.zup.Brazilian_Tax_API.controllers.taxCalculatorDTOs.TaxCalculatorResponseDTO;
+import br.com.zup.Brazilian_Tax_API.controllers.taxCalculatorDTOs.TaxCalculatorUpdateDTO;
 import br.com.zup.Brazilian_Tax_API.models.TaxCalculator;
 import br.com.zup.Brazilian_Tax_API.models.TypesTax;
 import br.com.zup.Brazilian_Tax_API.services.ServiceTaxCalculator;
@@ -90,36 +91,34 @@ public class TestControllerTaxCalculator {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.valueTax", CoreMatchers.is(100.00)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.taxId", CoreMatchers.is(1)));
     }
+    //Test deleted
+    @Test
+    public void testDeleteTaxCalculatorWithExistingId() throws Exception {
+        Long existingId = 1L;
+        Mockito.doNothing().when(serviceTaxCalculator).deleteTaxCalculator(existingId);
+
+        mvc.perform(MockMvcRequestBuilders
+                        .delete("/api/tax/calculators/{id}", existingId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+
+        Mockito.verify(serviceTaxCalculator, Mockito.times(1)).deleteTaxCalculator(existingId);
+    }
 
     @Test
-    public void testWhenListTaxCalculatorsHappyPath() throws Exception {
-        TaxCalculator taxCalculator1 = new TaxCalculator();
-        taxCalculator1.setId(1L);
-        taxCalculator1.setValueTax(100.00);
-        taxCalculator1.setTax(typesTax);
+    public void testDeleteTypesTaxWithNonExistentId() throws Exception {
+        Long nonExistentId = 99L;
+        Mockito.doThrow(new RuntimeException("Tax not found"))
+                .when(serviceTaxCalculator).deleteTaxCalculator(nonExistentId);
 
-        TaxCalculator taxCalculator2 = new TaxCalculator();
-        taxCalculator2.setId(2L);
-        taxCalculator2.setValueTax(200.00);
-        taxCalculator2.setTax(typesTax);
-
-        List<TaxCalculator> taxCalculators = List.of(taxCalculator1, taxCalculator2);
-
-        Mockito.when(serviceTaxCalculator.listAllTaxCalculators()).thenReturn(taxCalculators);
-
-        Mockito.when(mapperTaxCalculator.fromResponseTaxCalculator(taxCalculator1))
-                .thenReturn(new TaxCalculatorResponseDTO(1L, 100.00, 1L));
-        Mockito.when(mapperTaxCalculator.fromResponseTaxCalculator(taxCalculator2))
-                .thenReturn(new TaxCalculatorResponseDTO(2L, 200.00, 1L));
-
-        mvc.perform(MockMvcRequestBuilders.get("/api/tax/calculators")
+        mvc.perform(MockMvcRequestBuilders
+                        .delete("/api/tax/calculators/{id}", nonExistentId)
                         .contentType(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id", CoreMatchers.is(1)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].valueTax", CoreMatchers.is(100.00)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1].id", CoreMatchers.is(2)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1].valueTax", CoreMatchers.is(200.00)));
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+
+        Mockito.verify(serviceTaxCalculator, Mockito.times(1)).deleteTaxCalculator(nonExistentId);
     }
+
+
 }
 
