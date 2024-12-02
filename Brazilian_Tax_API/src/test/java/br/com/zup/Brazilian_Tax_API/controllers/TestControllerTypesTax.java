@@ -41,7 +41,7 @@ public class TestControllerTypesTax {
         typesTax.setAliquota(18.0);
     }
 
-    //Test de registro
+    //Test de register
     @Test
     public void testWhenRegisterTypesTaxHappyPath() throws Exception {
         TypesTaxRegisterDTO typesTaxRegisterDTO = new TypesTaxRegisterDTO();
@@ -65,7 +65,7 @@ public class TestControllerTypesTax {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.aliquota", CoreMatchers.is(18.0)));
     }
 
-    //test de listagem
+    //test de list
     @Test
     public void testWhenGetAllTypesTax() throws Exception {
         TypesTax tax1 = new TypesTax();
@@ -100,6 +100,32 @@ public class TestControllerTypesTax {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].description", CoreMatchers.is("Service Tax")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].aliquota", CoreMatchers.is(5.0)));
     }
+
+    //Test de update
+    @Test
+    public void testWhenUpdateTypesTaxHappyPath() throws Exception {
+        TypesTaxUpdateDTO typesTaxUpdateDTO = new TypesTaxUpdateDTO();
+        typesTaxUpdateDTO.setId(1L);
+        typesTaxUpdateDTO.setName("ICMS");
+        typesTaxUpdateDTO.setDescription("Tax on the Circulation of Goods and Services");
+        typesTaxUpdateDTO.setAliquota(18.0);
+        String json = mapper.writeValueAsString(typesTaxUpdateDTO);
+
+        Mockito.when(serviceTypesTax.updateTypesTax(Mockito.eq(1L), Mockito.any(TypesTaxUpdateDTO.class))).thenReturn(typesTax);
+
+        mvc.perform(
+                        MockMvcRequestBuilders
+                                .put("/api/tax/types/1")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(json)
+                )
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id", CoreMatchers.is(typesTax.getId())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name", CoreMatchers.is("ICMS")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.description", CoreMatchers.is("Tax on the Circulation of Goods and Services")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.aliquota", CoreMatchers.is(18.0)));
+    }
+
 
 
 }
