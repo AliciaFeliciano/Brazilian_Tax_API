@@ -3,6 +3,7 @@ package br.com.zup.Brazilian_Tax_API.services;
 import br.com.zup.Brazilian_Tax_API.models.TaxCalculator;
 import br.com.zup.Brazilian_Tax_API.models.TypesTax;
 import br.com.zup.Brazilian_Tax_API.repositorys.RepositoryTaxCalculator;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -11,7 +12,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -56,7 +60,7 @@ public class TestServiceTaxCalculator {
     }
 
     @Test
-   public void testWhenRegisterTaxCalculatorDoesNotHappyPath() {
+     public void testWhenRegisterTaxCalculatorDoesNotHappyPath() {
         Mockito.when(repositoryTaxCalculator.existsByValueBaseAndTypesTax(
                 Mockito.anyDouble(), Mockito.any(TypesTax.class)
         )).thenReturn(true);
@@ -69,4 +73,21 @@ public class TestServiceTaxCalculator {
         assertEquals(taxCalculator.getTax(), registeredTaxCalculator.getTax());
         Mockito.verify(repositoryTaxCalculator, Mockito.times(1)).save(Mockito.any(TaxCalculator.class));
     }
+
+    //Test update TaxCalculator
+
+    public void testWhenUpdateTaxCalculatorDoesNotHappyPath() {
+        Long nonExistentId = 1L;
+        TaxCalculator mockTaxCalculator = new TaxCalculator();
+        Mockito.when(repositoryTaxCalculator.findById(nonExistentId)).thenReturn(Optional.of(mocktaxCalculator));
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () ->
+                serviceTaxCalculator.updateTypesTax(nonExistentId, taxCalculatorUpdateDTO)
+        );
+
+        Assertions.assertEquals("Tax Calculator not found", exception.getMessage());
+
+        Mockito.verify(repositoryTaxCalculator, Mockito.times(0)).save(Mockito.any());
+    }
+
 }
