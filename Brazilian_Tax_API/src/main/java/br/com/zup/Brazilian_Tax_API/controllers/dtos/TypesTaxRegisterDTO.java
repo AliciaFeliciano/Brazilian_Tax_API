@@ -1,4 +1,4 @@
-package br.com.zup.Brazilian_Tax_API.controllers;
+package br.com.zup.Brazilian_Tax_API.controllers.dtos;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

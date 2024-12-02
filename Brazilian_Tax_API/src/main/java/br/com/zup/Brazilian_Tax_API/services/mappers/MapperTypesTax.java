@@ -1,7 +1,7 @@
 package br.com.zup.Brazilian_Tax_API.services.mappers;
 
-import br.com.zup.Brazilian_Tax_API.controllers.TypesTaxRegisterDTO;
-import br.com.zup.Brazilian_Tax_API.controllers.TypesTaxUpdateDTO;
+import br.com.zup.Brazilian_Tax_API.controllers.dtos.TypesTaxRegisterDTO;
+import br.com.zup.Brazilian_Tax_API.controllers.dtos.TypesTaxUpdateDTO;
 import br.com.zup.Brazilian_Tax_API.models.TypesTax;
 
 public class MapperTypesTax {
