@@ -156,4 +156,23 @@ public class TestServiceTaxCalculator {
         Mockito.verify(repositoryTaxCalculator, Mockito.times(1)).findAll();
     }
 
+    //Test delete tax calculator
+    @Test
+    public void testDeleteTaxCalculatorWithExistingId() {
+        Long existingId = 1L;
+        TaxCalculator existingTax = new TaxCalculator();
+        existingTax.setId(existingId);
+        existingTax.setValueTax(100.00);
+        TypesTax typesTax1 = new TypesTax();
+        typesTax1.setName("ICMS");
+        existingTax.setTax(typesTax1);
+
+        Mockito.when(repositoryTaxCalculator.findById(existingId)).thenReturn(Optional.of(existingTax));
+
+        serviceTaxCalculator.deleteTaxCalculator(existingId);
+
+        Mockito.verify(repositoryTaxCalculator, Mockito.times(1)).deleteById(existingId);
+    }
+
+
 }
