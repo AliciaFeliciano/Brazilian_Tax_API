@@ -71,5 +71,15 @@ public class ControllerTaxCalculator {
         }
     }
 
+    @DeleteMapping("/calculators/{id}")
+    public ResponseEntity<Void> deleteTypesTax(@PathVariable Long id) {
+        try {
+            serviceTaxCalculator.deleteTaxCalculator(id);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException exception) {
+            return ResponseEntity.status(404).build();
+        }
+    }
+
 
 }

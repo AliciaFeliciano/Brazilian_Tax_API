@@ -16,7 +16,7 @@
                   <entry key="$USER_HOME$/AppData/Local/JetBrains/IntelliJIdea2024.1/projects/brazilian_tax_api.7b772ec/external_build_system/project/libraries.xml" value="453543" />
                   <entry key="$PROJECT_DIR$/Brazilian_Tax_API/pom.xml" value="273400" />
                   <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/main/java/br/com/zup/Brazilian_Tax_API/BrazilianTaxApiApplication.java" value="784476" />
-                  <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/main/java/br/com/zup/Brazilian_Tax_API/controllers/ControllerTaxCalculator.java" value="1504284" />
+                  <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/main/java/br/com/zup/Brazilian_Tax_API/controllers/ControllerTaxCalculator.java" value="1527162" />
                   <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/main/java/br/com/zup/Brazilian_Tax_API/controllers/ControllerTypesTax.java" value="993678" />
                   <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/main/java/br/com/zup/Brazilian_Tax_API/controllers/TypesTaxRegisterDTO.java" value="262004" />
                   <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/main/java/br/com/zup/Brazilian_Tax_API/controllers/TypesTaxUpdateDTO.java" value="431586" />
@@ -24,7 +24,7 @@
                   <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/main/java/br/com/zup/Brazilian_Tax_API/controllers/dtos/TypesTaxResponseDTO.java" value="709864" />
                   <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/main/java/br/com/zup/Brazilian_Tax_API/controllers/dtos/TypesTaxUpdateDTO.java" value="605589" />
                   <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/main/java/br/com/zup/Brazilian_Tax_API/controllers/taxCalculatorDTOs/TaxCalculatorRegisterDTO.java" value="1018180" />
-                  <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/main/java/br/com/zup/Brazilian_Tax_API/controllers/taxCalculatorDTOs/TaxCalculatorResponseDTO.java" value="1507964" />
+                  <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/main/java/br/com/zup/Brazilian_Tax_API/controllers/taxCalculatorDTOs/TaxCalculatorResponseDTO.java" value="1527163" />
                   <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/main/java/br/com/zup/Brazilian_Tax_API/controllers/taxCalculatorDTOs/TaxCalculatorUpdateDTO.java" value="1111446" />
                   <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/main/java/br/com/zup/Brazilian_Tax_API/controllers/typesTaxDTOs/TypesTaxRegisterDTO.java" value="993247" />
                   <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/main/java/br/com/zup/Brazilian_Tax_API/controllers/typesTaxDTOs/TypesTaxResponseDTO.java" value="993507" />
@@ -35,12 +35,12 @@
                   <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/main/java/br/com/zup/Brazilian_Tax_API/repositorys/RepositoryTypesTax.java" value="242860" />
                   <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/main/java/br/com/zup/Brazilian_Tax_API/services/ServiceTaxCalculator.java" value="1323310" />
                   <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/main/java/br/com/zup/Brazilian_Tax_API/services/ServiceTypesTax.java" value="993724" />
-                  <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/main/java/br/com/zup/Brazilian_Tax_API/services/mappers/MapperTaxCalculator.java" value="1491794" />
+                  <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/main/java/br/com/zup/Brazilian_Tax_API/services/mappers/MapperTaxCalculator.java" value="1517719" />
                   <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/main/java/br/com/zup/Brazilian_Tax_API/services/mappers/MapperTypesTax.java" value="993770" />
                   <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/main/resources/application.yml" value="271802" />
                   <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/test/java/br/com/zup/Brazilian_Tax_API/BrazilianTaxApiApplicationTests.java" value="33" />
-                  <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/test/java/br/com/zup/Brazilian_Tax_API/controllers/TestControllerTaxCalculator.java" value="1508627" />
-                  <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/test/java/br/com/zup/Brazilian_Tax_API/controllers/TestControllerTypesTax.java" value="1349573" />
+                  <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/test/java/br/com/zup/Brazilian_Tax_API/controllers/TestControllerTaxCalculator.java" value="1527161" />
+                  <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/test/java/br/com/zup/Brazilian_Tax_API/controllers/TestControllerTypesTax.java" value="1527160" />
                   <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/test/java/br/com/zup/Brazilian_Tax_API/controllers/infras/GlobalExceptionHandler.java" value="1458809" />
                   <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/test/java/br/com/zup/Brazilian_Tax_API/services/TestServiceTaxCalculator.java" value="1318833" />
                   <entry key="$PROJECT_DIR$/Brazilian_Tax_API/src/test/java/br/com/zup/Brazilian_Tax_API/services/TestServiceTypesTax.java" value="1335206" />
