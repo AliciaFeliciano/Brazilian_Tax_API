@@ -147,5 +147,17 @@ public class TestControllerTypesTax {
         Mockito.verify(serviceTypesTax, Mockito.times(1)).deleteTypesTax(nonExistentId);
     }
 
+    @Test
+    public void testDeleteTypesTaxWithExistingId() throws Exception {
+        Long existingId = 1L;
 
+        Mockito.doNothing().when(serviceTypesTax).deleteTypesTax(existingId);
+
+        mvc.perform(MockMvcRequestBuilders
+                        .delete("/api/tax/types/{id}", existingId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+
+        Mockito.verify(serviceTypesTax, Mockito.times(1)).deleteTypesTax(existingId);
+    }
 }
