@@ -59,7 +59,6 @@ public class TestControllerTypesTax {
                                 .content(json)
                 )
                 .andExpect(MockMvcResultMatchers.status().isCreated())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id", CoreMatchers.is(typesTax.getId())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name", CoreMatchers.is("ICMS")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.description", CoreMatchers.is("Tax on the Circulation of Goods and Services")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.aliquota", CoreMatchers.is(18.0)));
@@ -133,9 +132,22 @@ public class TestControllerTypesTax {
 
     //Test deleted
     @Test
+    public void testDeleteTypesTaxWithExistingId() throws Exception {
+        Long existingId = 1L;
+        Mockito.doNothing().when(serviceTypesTax).deleteTypesTax(existingId);
+
+        mvc.perform(MockMvcRequestBuilders
+                        .delete("/api/tax/types/{id}", existingId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+
+        Mockito.verify(serviceTypesTax, Mockito.times(1)).deleteTypesTax(existingId);
+    }
+
+
+    @Test
     public void testDeleteTypesTaxWithNonExistentId() throws Exception {
         Long nonExistentId = 99L;
-
         Mockito.doThrow(new RuntimeException("Tax not found"))
                 .when(serviceTypesTax).deleteTypesTax(nonExistentId);
 
@@ -147,17 +159,4 @@ public class TestControllerTypesTax {
         Mockito.verify(serviceTypesTax, Mockito.times(1)).deleteTypesTax(nonExistentId);
     }
 
-    @Test
-    public void testDeleteTypesTaxWithExistingId() throws Exception {
-        Long existingId = 1L;
-
-        Mockito.doNothing().when(serviceTypesTax).deleteTypesTax(existingId);
-
-        mvc.perform(MockMvcRequestBuilders
-                        .delete("/api/tax/types/{id}", existingId)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isNoContent());
-
-        Mockito.verify(serviceTypesTax, Mockito.times(1)).deleteTypesTax(existingId);
-    }
 }

@@ -50,15 +50,14 @@ public class ServiceTypesTax {
     }
 
     public List<TypesTax> getAllTypesTax() {
+
         return repositoryTypesTax.findAll();
     }
 
-    public TypesTax deleteTypesTax(Long id) {
-        Optional<TypesTax> optional = repositoryTypesTax.findById(id);
-        if (optional.isEmpty()) {
-            throw new RuntimeException("Tax not found");
-        }
+    public void deleteTypesTax(Long id) {
+        TypesTax typesTax = repositoryTypesTax.findById(id)
+                .orElseThrow(() -> new RuntimeException("Tax not found"));
         repositoryTypesTax.deleteById(id);
-        return optional.get();
     }
+
 }

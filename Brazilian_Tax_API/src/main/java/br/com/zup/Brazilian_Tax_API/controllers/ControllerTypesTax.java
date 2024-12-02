@@ -66,13 +66,13 @@ public class ControllerTypesTax {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/types/{id}")
     public ResponseEntity<Void> deleteTypesTax(@PathVariable Long id) {
         try {
             serviceTypesTax.deleteTypesTax(id);
             return ResponseEntity.noContent().build();
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
+        } catch (RuntimeException exception) {
+            return ResponseEntity.status(404).build();
         }
     }
 
