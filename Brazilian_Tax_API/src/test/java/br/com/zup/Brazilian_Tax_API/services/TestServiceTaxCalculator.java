@@ -1,7 +1,6 @@
 package br.com.zup.Brazilian_Tax_API.services;
 
 import br.com.zup.Brazilian_Tax_API.controllers.taxCalculatorDTOs.TaxCalculatorUpdateDTO;
-import br.com.zup.Brazilian_Tax_API.controllers.typesTaxDTOs.TypesTaxUpdateDTO;
 import br.com.zup.Brazilian_Tax_API.models.TaxCalculator;
 import br.com.zup.Brazilian_Tax_API.models.TypesTax;
 import br.com.zup.Brazilian_Tax_API.repositorys.RepositoryTaxCalculator;
@@ -15,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -126,6 +126,34 @@ public class TestServiceTaxCalculator {
         Mockito.verify(repositoryTaxCalculator, Mockito.times(1)).save(existingTax);
     }
 
+    //test list tax calculator
 
+    @Test
+    public void testGetAllTaxCalculator() {
+        TaxCalculator tax1 = new TaxCalculator();
+        tax1.setId(1L);
+        tax1.setValueTax(100.00);
+        TypesTax typesTax1 = new TypesTax();
+        typesTax1.setName("ICMS");
+        tax1.setTax(typesTax1);
+
+        TaxCalculator tax2 = new TaxCalculator();
+        tax2.setId(2L);
+        tax2.setValueTax(160.00);
+        TypesTax typesTax2 = new TypesTax();
+        typesTax2.setName("ISS");
+        tax2.setTax(typesTax2);
+
+        List<TaxCalculator> mockTaxCalculatorList = List.of(tax1, tax2);
+
+        Mockito.when(repositoryTaxCalculator.findAll()).thenReturn(mockTaxCalculatorList);
+
+        List<TaxCalculatorResponseDTO> allTaxCalculators = serviceTaxCalculator.getAllTaxCalculators();
+
+        assertEquals(2, allTaxCalculators.size());
+        assertEquals("ICMS", allTaxCalculators.get(0).getTaxName());
+        assertEquals("ISS", allTaxCalculators.get(1).getTaxName());
+        Mockito.verify(repositoryTaxCalculator, Mockito.times(1)).findAll();
+    }
 
 }
