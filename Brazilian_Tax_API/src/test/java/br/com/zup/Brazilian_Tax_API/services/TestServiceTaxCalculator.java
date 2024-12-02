@@ -54,4 +54,19 @@ public class TestServiceTaxCalculator {
 
         Mockito.verify(repositoryTaxCalculator, Mockito.times(1)).save(Mockito.any(TaxCalculator.class));
     }
+
+    @Test
+   public void testWhenRegisterTaxCalculatorDoesNotHappyPath() {
+        Mockito.when(repositoryTaxCalculator.existsByValueBaseAndTypesTax(
+                Mockito.anyDouble(), Mockito.any(TypesTax.class)
+        )).thenReturn(true);
+
+        Mockito.when(repositoryTaxCalculator.save(Mockito.any(TaxCalculator.class)))
+                .thenAnswer(invocation -> invocation.getArgument(0));
+
+        TaxCalculator registeredTaxCalculator = serviceTaxCalculator.registerTaxCalculator(taxCalculator);
+        assertEquals(taxCalculator.getValueBase(), registeredTaxCalculator.getValueBase());
+        assertEquals(taxCalculator.getTax(), registeredTaxCalculator.getTax());
+        Mockito.verify(repositoryTaxCalculator, Mockito.times(1)).save(Mockito.any(TaxCalculator.class));
+    }
 }
