@@ -1,5 +1,6 @@
 package br.com.zup.Brazilian_Tax_API.services;
 
+import br.com.zup.Brazilian_Tax_API.controllers.taxCalculatorDTOs.TaxCalculatorUpdateDTO;
 import br.com.zup.Brazilian_Tax_API.models.TaxCalculator;
 import br.com.zup.Brazilian_Tax_API.models.TypesTax;
 import br.com.zup.Brazilian_Tax_API.repositorys.RepositoryTaxCalculator;
@@ -28,6 +29,8 @@ public class TestServiceTaxCalculator {
     private ServiceTaxCalculator serviceTaxCalculator;
 
     private TaxCalculator taxCalculator;
+    private TaxCalculatorUpdateDTO taxCalculatorUpdateDTO;
+
     private TypesTax typesTax;
 
     @BeforeEach
@@ -79,14 +82,13 @@ public class TestServiceTaxCalculator {
     @Test
     public void testWhenUpdateTaxCalculatorDoesNotHappyPath() {
         Long nonExistentId = 1L;
-        TaxCalculator mockTaxCalculator = new TaxCalculator();
-        Mockito.when(repositoryTaxCalculator.findById(nonExistentId)).thenReturn(Optional.of(mocktaxCalculator));
+        Mockito.when(repositoryTaxCalculator.findById(nonExistentId)).thenReturn(Optional.empty());
 
         RuntimeException exception = assertThrows(RuntimeException.class, () ->
-                serviceTaxCalculator.updateTypesTax(nonExistentId, taxCalculatorUpdateDTO)
+                serviceTaxCalculator.updateTaxCalculator(nonExistentId, taxCalculatorUpdateDTO)
         );
 
-        Assertions.assertEquals("Tax Calculator not found", exception.getMessage());
+        Assertions.assertEquals("TaxCalculator not found", exception.getMessage());
 
         Mockito.verify(repositoryTaxCalculator, Mockito.times(0)).save(Mockito.any());
     }
