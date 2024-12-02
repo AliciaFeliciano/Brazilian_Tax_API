@@ -20,7 +20,7 @@ public class MapperTaxCalculator {
 
     public TaxCalculator fromRegisterTaxCalculator(TaxCalculatorRegisterDTO taxCalculatorRegisterDTO) {
         TaxCalculator taxCalculator = new TaxCalculator();
-        taxCalculator.setValueBase(taxCalculatorRegisterDTO.getValueTax());
+        taxCalculator.setValueTax(taxCalculatorRegisterDTO.getValueTax());
 
         TypesTax typesTax = repositoryTypesTax.findById(taxCalculatorRegisterDTO.getTaxId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid tax ID: " + taxCalculatorRegisterDTO.getTaxId()));
@@ -32,7 +32,7 @@ public class MapperTaxCalculator {
     public TaxCalculator fromUpdateTaxCalculator(TaxCalculatorUpdateDTO taxCalculatorUpdateDTO) {
         TaxCalculator taxCalculator = new TaxCalculator();
         taxCalculator.setId(taxCalculatorUpdateDTO.getId());
-        taxCalculator.setValueBase(taxCalculatorUpdateDTO.getValueTax());
+        taxCalculator.setValueTax(taxCalculatorUpdateDTO.getValueTax());
 
         TypesTax typesTax = repositoryTypesTax.findById(taxCalculatorUpdateDTO.getTaxId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid tax ID: " + taxCalculatorUpdateDTO.getTaxId()));

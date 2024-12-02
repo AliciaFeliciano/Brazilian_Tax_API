@@ -26,7 +26,7 @@ public class ServiceTaxCalculator {
 
     public TaxCalculator registerTaxCalculator(TaxCalculator taxCalculator) {
         boolean exists = repositoryTaxCalculator.existsByValueBaseAndTypesTax(
-                taxCalculator.getValueBase(), taxCalculator.getTax()
+                taxCalculator.getValueTax(), taxCalculator.getTax()
         );
         if (exists) {
             throw new IllegalArgumentException("TaxCalculator with the same value base and type already exists.");
@@ -35,13 +35,10 @@ public class ServiceTaxCalculator {
     }
 
     public TaxCalculator updateTaxCalculator(Long id, TaxCalculatorUpdateDTO taxCalculatorUpdateDTO) {
-        Optional<TaxCalculator> optional = repositoryTaxCalculator.findById(id);
-        if (optional.isEmpty()) {
-            throw new RuntimeException("TaxCalculator not found");
-        }
+        TaxCalculator existingTaxCalculator = repositoryTaxCalculator.findById(id)
+                .orElseThrow(() -> new RuntimeException("TaxCalculator not found"));
 
-        TaxCalculator existingTaxCalculator = optional.get();
-        existingTaxCalculator.setValueBase(taxCalculatorUpdateDTO.getValueTax());
+        existingTaxCalculator.setValueTax(taxCalculatorUpdateDTO.getValueTax());
 
         TypesTax typesTax = repositoryTypesTax.findById(taxCalculatorUpdateDTO.getTaxId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid tax ID: " + taxCalculatorUpdateDTO.getTaxId()));

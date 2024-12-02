@@ -13,7 +13,7 @@ public class TaxCalculator {
     @GeneratedValue
     private Long id;
 
-    private double valueBase;
+    private double valueTax;
 
     @ManyToOne
     private TypesTax tax;
