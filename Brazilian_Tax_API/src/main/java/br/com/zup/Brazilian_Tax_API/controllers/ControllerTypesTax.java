@@ -66,6 +66,15 @@ public class ControllerTypesTax {
         }
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTypesTax(@PathVariable Long id) {
+        try {
+            serviceTypesTax.deleteTypesTax(id);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 }
 
