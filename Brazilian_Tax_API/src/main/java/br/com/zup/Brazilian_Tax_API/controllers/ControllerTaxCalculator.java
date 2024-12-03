@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/tax")
+@RequestMapping("/calculators")
 public class ControllerTaxCalculator {
 
     private final ServiceTaxCalculator serviceTaxCalculator;
@@ -25,7 +25,7 @@ public class ControllerTaxCalculator {
         this.mapperTaxCalculator = mapperTaxCalculator;
     }
 
-    @PostMapping("/calculators")
+    @PostMapping()
     public ResponseEntity<?> registerTaxCalculator(@RequestBody @Valid TaxCalculatorRegisterDTO taxCalculatorRegisterDTO) {
         try {
             TaxCalculator taxCalculator = mapperTaxCalculator.fromRegisterTaxCalculator(taxCalculatorRegisterDTO);
@@ -42,7 +42,7 @@ public class ControllerTaxCalculator {
         }
     }
 
-    @GetMapping("/calculators")
+    @GetMapping()
     public ResponseEntity<?> getAllTaxCalculator() {
         try {
 
@@ -58,7 +58,7 @@ public class ControllerTaxCalculator {
         }
     }
 
-    @PutMapping("/calculators/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<?> updateTaxCalculator(
             @PathVariable Long id,
             @RequestBody @Valid TaxCalculatorUpdateDTO taxCalculatorUpdateDTO) {
@@ -71,7 +71,7 @@ public class ControllerTaxCalculator {
         }
     }
 
-    @DeleteMapping("/calculators/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTypesTax(@PathVariable Long id) {
         try {
             serviceTaxCalculator.deleteTaxCalculator(id);
@@ -80,6 +80,4 @@ public class ControllerTaxCalculator {
             return ResponseEntity.status(404).build();
         }
     }
-
-
 }

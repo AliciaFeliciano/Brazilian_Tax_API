@@ -10,5 +10,4 @@ public class BrazilianTaxApiApplication {
 
 		SpringApplication.run(BrazilianTaxApiApplication.class, args);
 	}
-
 }
