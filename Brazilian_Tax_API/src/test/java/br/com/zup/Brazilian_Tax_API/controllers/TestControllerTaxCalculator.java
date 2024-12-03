@@ -3,6 +3,7 @@ package br.com.zup.Brazilian_Tax_API.controllers;
 import br.com.zup.Brazilian_Tax_API.controllers.taxCalculatorDTOs.TaxCalculatorRegisterDTO;
 import br.com.zup.Brazilian_Tax_API.controllers.taxCalculatorDTOs.TaxCalculatorResponseDTO;
 import br.com.zup.Brazilian_Tax_API.controllers.taxCalculatorDTOs.TaxCalculatorUpdateDTO;
+import br.com.zup.Brazilian_Tax_API.controllers.typesTaxDTOs.TypesTaxUpdateDTO;
 import br.com.zup.Brazilian_Tax_API.models.TaxCalculator;
 import br.com.zup.Brazilian_Tax_API.models.TypesTax;
 import br.com.zup.Brazilian_Tax_API.services.ServiceTaxCalculator;
@@ -15,7 +16,6 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -134,6 +134,38 @@ public class TestControllerTaxCalculator {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].id", CoreMatchers.is(2)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].valueTax", CoreMatchers.is(160.00)));
 
+    }
+
+    //Test de update
+    @Test
+    public void testWhenUpdateTaxCalculatorHappyPath() throws Exception {
+        TypesTax typesTax1 = new TypesTax();
+        typesTax1.setId(1L);
+        typesTax1.setName("ICMS");
+        typesTax1.setDescription("Tax on the Circulation of Goods and Services");
+
+        TaxCalculatorUpdateDTO taxCalculatorUpdateDTO = new TaxCalculatorUpdateDTO();
+        taxCalculatorUpdateDTO.setValueTax(160.00);
+        taxCalculatorUpdateDTO.setTaxId(1L);
+
+        TaxCalculator updatedTaxCalculator = new TaxCalculator();
+        updatedTaxCalculator.setId(1L);
+        updatedTaxCalculator.setValueTax(160.00);
+        updatedTaxCalculator.setTax(typesTax1);
+
+        String json = mapper.writeValueAsString(taxCalculatorUpdateDTO);
+
+        Mockito.when(serviceTaxCalculator.updateTaxCalculator(Mockito.eq(1L), Mockito.any(TaxCalculatorUpdateDTO.class)))
+                .thenReturn(updatedTaxCalculator);
+
+        mvc.perform(MockMvcRequestBuilders
+                        .put("/api/tax/calculators/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id", CoreMatchers.is(1)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.valueTax", CoreMatchers.is(160.00)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.taxId", CoreMatchers.is(1)));
     }
 
     //Test deleted
