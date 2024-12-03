@@ -50,7 +50,7 @@ public class TestServiceTaxCalculator {
     // Test register TaxCalculator
     @Test
     public void testWhenRegisterTaxCalculatorHappyPath() {
-        Mockito.when(repositoryTaxCalculator.existsByValueBaseAndTypesTax(
+        Mockito.when(repositoryTaxCalculator.existsByValueTaxAndTax(
                 Mockito.anyDouble(), Mockito.any(TypesTax.class)
         )).thenReturn(false);
 
@@ -67,7 +67,7 @@ public class TestServiceTaxCalculator {
 
     @Test
      public void testWhenRegisterTaxCalculatorDoesNotHappyPath() {
-        Mockito.when(repositoryTaxCalculator.existsByValueBaseAndTypesTax(
+        Mockito.when(repositoryTaxCalculator.existsByValueTaxAndTax(
                 Mockito.anyDouble(), Mockito.any(TypesTax.class)
         )).thenReturn(true);
 

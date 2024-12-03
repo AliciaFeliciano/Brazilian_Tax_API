@@ -9,28 +9,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ServiceTaxCalculator {
-
     private final RepositoryTaxCalculator repositoryTaxCalculator;
     private final RepositoryTypesTax repositoryTypesTax;
-
 
     @Autowired
     public ServiceTaxCalculator(RepositoryTaxCalculator repositoryTaxCalculator, RepositoryTypesTax repositoryTypesTax) {
         this.repositoryTaxCalculator = repositoryTaxCalculator;
         this.repositoryTypesTax = repositoryTypesTax;
-
     }
 
     public TaxCalculator registerTaxCalculator(TaxCalculator taxCalculator) {
-        boolean exists = repositoryTaxCalculator.existsByValueBaseAndTypesTax(
+        boolean exists = repositoryTaxCalculator.existsByValueTaxAndTax(
                 taxCalculator.getValueTax(), taxCalculator.getTax()
         );
         if (exists) {
-            throw new IllegalArgumentException("TaxCalculator with the same value base and type already exists.");
+            throw new IllegalArgumentException("TaxCalculator with the same value and type already exists.");
         }
         return repositoryTaxCalculator.save(taxCalculator);
     }
@@ -40,7 +36,6 @@ public class ServiceTaxCalculator {
                 .orElseThrow(() -> new RuntimeException("TaxCalculator not found"));
 
         existingTaxCalculator.setValueTax(taxCalculatorUpdateDTO.getValueTax());
-
         TypesTax typesTax = repositoryTypesTax.findById(taxCalculatorUpdateDTO.getTaxId())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid tax ID: " + taxCalculatorUpdateDTO.getTaxId()));
         existingTaxCalculator.setTax(typesTax);
@@ -53,11 +48,9 @@ public class ServiceTaxCalculator {
     }
 
     public void deleteTaxCalculator(Long id) {
-        Optional<TaxCalculator> taxCalculator = repositoryTaxCalculator.findById(id);
-        if (taxCalculator.isPresent()) {
-            repositoryTaxCalculator.deleteById(id);
-        } else {
+        if (!repositoryTaxCalculator.existsById(id)) {
             throw new RuntimeException("TaxCalculator not found");
         }
+        repositoryTaxCalculator.deleteById(id);
     }
 }

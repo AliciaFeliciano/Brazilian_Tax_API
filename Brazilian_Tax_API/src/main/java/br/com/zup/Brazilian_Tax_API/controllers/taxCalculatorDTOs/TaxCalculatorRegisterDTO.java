@@ -1,4 +1,3 @@
-
 package br.com.zup.Brazilian_Tax_API.controllers.taxCalculatorDTOs;
 
 import jakarta.validation.constraints.NotNull;

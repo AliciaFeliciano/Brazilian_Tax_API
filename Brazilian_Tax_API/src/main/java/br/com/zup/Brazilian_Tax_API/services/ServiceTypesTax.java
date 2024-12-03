@@ -8,11 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ServiceTypesTax {
-
     private final RepositoryTypesTax repositoryTypesTax;
 
     @Autowired
@@ -31,12 +29,8 @@ public class ServiceTypesTax {
     }
 
     public TypesTax updateTypesTax(Long id, TypesTaxUpdateDTO typesTaxUpdateDTO) {
-        Optional<TypesTax> optional = repositoryTypesTax.findById(id);
-        if (optional.isEmpty()) {
-            throw new RuntimeException("Tax not found");
-        }
-
-        TypesTax existingTax = optional.get();
+        TypesTax existingTax = repositoryTypesTax.findById(id)
+                .orElseThrow(() -> new RuntimeException("Tax not found"));
 
         if (existingTax.getName().equals(typesTaxUpdateDTO.getName()) &&
                 existingTax.getDescription().equals(typesTaxUpdateDTO.getDescription()) &&
@@ -45,19 +39,17 @@ public class ServiceTypesTax {
         }
 
         MapperTypesTax.fromUpdatesTypesTax(existingTax, typesTaxUpdateDTO);
-
         return repositoryTypesTax.save(existingTax);
     }
 
     public List<TypesTax> getAllTypesTax() {
-
         return repositoryTypesTax.findAll();
     }
 
     public void deleteTypesTax(Long id) {
-        TypesTax typesTax = repositoryTypesTax.findById(id)
-                .orElseThrow(() -> new RuntimeException("Tax not found"));
+        if (!repositoryTypesTax.existsById(id)) {
+            throw new RuntimeException("Tax not found");
+        }
         repositoryTypesTax.deleteById(id);
     }
-
 }

@@ -5,6 +5,5 @@ import br.com.zup.Brazilian_Tax_API.models.TypesTax;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RepositoryTaxCalculator extends JpaRepository<TaxCalculator, Long> {
-    boolean existsByValueBaseAndTypesTax(double valueBase, TypesTax tax);
-
+    boolean existsByValueTaxAndTax(double valueTax, TypesTax tax);
 }

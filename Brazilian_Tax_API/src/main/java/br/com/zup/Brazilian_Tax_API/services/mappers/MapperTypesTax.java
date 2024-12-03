@@ -6,19 +6,13 @@ import br.com.zup.Brazilian_Tax_API.controllers.typesTaxDTOs.TypesTaxUpdateDTO;
 import br.com.zup.Brazilian_Tax_API.models.TypesTax;
 
 public class MapperTypesTax {
-    public static TypesTax fromRegisterTypesTax(TypesTaxRegisterDTO typesTaxRegisterDTO) {
-        TypesTax typesTax = new TypesTax();
-        typesTax.setName(typesTaxRegisterDTO.getName());
-        typesTax.setDescription(typesTaxRegisterDTO.getDescription());
-        typesTax.setAliquota(typesTaxRegisterDTO.getAliquota());
-        return typesTax;
-    }
 
-    public static void fromUpdatesTypesTax(TypesTax typesTax, TypesTaxUpdateDTO typesTaxUpdateDTO) {
-        typesTax.setId(typesTaxUpdateDTO.getId());
-        typesTax.setName(typesTaxUpdateDTO.getName());
-        typesTax.setDescription(typesTaxUpdateDTO.getDescription());
-        typesTax.setAliquota(typesTaxUpdateDTO.getAliquota());
+    public static TypesTax fromRegisterTypesTax(TypesTaxRegisterDTO dto) {
+        TypesTax typesTax = new TypesTax();
+        typesTax.setName(dto.getName());
+        typesTax.setDescription(dto.getDescription());
+        typesTax.setAliquota(dto.getAliquota());
+        return typesTax;
     }
 
     public static TypesTaxResponseDTO fromResponseTypesTax(TypesTax typesTax) {
@@ -28,5 +22,11 @@ public class MapperTypesTax {
         responseDTO.setDescription(typesTax.getDescription());
         responseDTO.setAliquota(typesTax.getAliquota());
         return responseDTO;
+    }
+
+    public static void fromUpdatesTypesTax(TypesTax existingTax, TypesTaxUpdateDTO dto) {
+        existingTax.setName(dto.getName());
+        existingTax.setDescription(dto.getDescription());
+        existingTax.setAliquota(dto.getAliquota());
     }
 }

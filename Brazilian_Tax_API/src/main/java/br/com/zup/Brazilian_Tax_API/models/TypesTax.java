@@ -13,8 +13,8 @@ public class TypesTax {
     @Id
     @GeneratedValue
     private long id;
+
     private String name;
     private String description;
     private double aliquota;
-
 }

@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/calculators")
+@RequestMapping("/api/tax/calculators")
 public class ControllerTaxCalculator {
 
     private final ServiceTaxCalculator serviceTaxCalculator;
@@ -25,15 +25,12 @@ public class ControllerTaxCalculator {
         this.mapperTaxCalculator = mapperTaxCalculator;
     }
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<?> registerTaxCalculator(@RequestBody @Valid TaxCalculatorRegisterDTO taxCalculatorRegisterDTO) {
         try {
             TaxCalculator taxCalculator = mapperTaxCalculator.fromRegisterTaxCalculator(taxCalculatorRegisterDTO);
-
             TaxCalculator savedTaxCalculator = serviceTaxCalculator.registerTaxCalculator(taxCalculator);
-
             TaxCalculatorResponseDTO responseDTO = mapperTaxCalculator.fromResponseTaxCalculator(savedTaxCalculator);
-
             return ResponseEntity.status(201).body(responseDTO);
         } catch (IllegalArgumentException exception) {
             return ResponseEntity.status(422).body(Map.of("message", exception.getMessage()));
@@ -42,16 +39,13 @@ public class ControllerTaxCalculator {
         }
     }
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<?> getAllTaxCalculator() {
         try {
-
             List<TaxCalculator> taxCalculatorsList = serviceTaxCalculator.getAllTaxCalculators();
-
             List<TaxCalculatorResponseDTO> responseDTOList = taxCalculatorsList.stream()
                     .map(MapperTaxCalculator::fromResponseTaxCalculator)
                     .toList();
-
             return ResponseEntity.ok(responseDTOList);
         } catch (RuntimeException exception) {
             return ResponseEntity.status(500).body(Map.of("message", exception.getMessage()));
@@ -72,7 +66,7 @@ public class ControllerTaxCalculator {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTypesTax(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteTaxCalculator(@PathVariable Long id) {
         try {
             serviceTaxCalculator.deleteTaxCalculator(id);
             return ResponseEntity.noContent().build();

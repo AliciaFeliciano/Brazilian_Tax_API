@@ -15,45 +15,42 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/tax")
+@RequestMapping("/api/tax/types")
 public class ControllerTypesTax {
-    @Autowired
+
     private final ServiceTypesTax serviceTypesTax;
 
+    @Autowired
     public ControllerTypesTax(ServiceTypesTax serviceTypesTax) {
         this.serviceTypesTax = serviceTypesTax;
     }
 
-    @PostMapping("/types")
+    @PostMapping
     public ResponseEntity<?> register(@RequestBody @Valid TypesTaxRegisterDTO typesTaxRegisterDTO) {
         try {
             TypesTax typesTax = MapperTypesTax.fromRegisterTypesTax(typesTaxRegisterDTO);
             TypesTax savedTypesTax = serviceTypesTax.registerTypesTax(typesTax);
-
             TypesTaxResponseDTO responseDTO = MapperTypesTax.fromResponseTypesTax(savedTypesTax);
-
             return ResponseEntity.status(201).body(responseDTO);
         } catch (RuntimeException exception) {
             return ResponseEntity.status(422).body(Map.of("message", exception.getMessage()));
         }
     }
 
-    @GetMapping("/types")
+    @GetMapping
     public ResponseEntity<?> getAllTypesTax() {
         try {
             List<TypesTax> typesTaxList = serviceTypesTax.getAllTypesTax();
-
             List<TypesTaxResponseDTO> responseDTOList = typesTaxList.stream()
                     .map(MapperTypesTax::fromResponseTypesTax)
                     .toList();
-
             return ResponseEntity.ok(responseDTOList);
         } catch (RuntimeException exception) {
             return ResponseEntity.status(500).body(Map.of("message", exception.getMessage()));
         }
     }
 
-    @PutMapping("/types/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<?> updateTypesTax(
             @PathVariable Long id,
             @RequestBody @Valid TypesTaxUpdateDTO typesTaxUpdateDTO) {
@@ -66,7 +63,7 @@ public class ControllerTypesTax {
         }
     }
 
-    @DeleteMapping("/types/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTypesTax(@PathVariable Long id) {
         try {
             serviceTypesTax.deleteTypesTax(id);
@@ -75,6 +72,5 @@ public class ControllerTypesTax {
             return ResponseEntity.status(404).build();
         }
     }
-
 }
 

@@ -8,7 +8,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TaxCalculator {
-
     @Id
     @GeneratedValue
     private Long id;
@@ -16,5 +15,9 @@ public class TaxCalculator {
     private double valueTax;
 
     @ManyToOne
+    @JoinColumn(name = "types_tax_id")
     private TypesTax tax;
+
+    @Enumerated(EnumType.STRING)
+    private TaxTypesCalculator taxType;
 }
